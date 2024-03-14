@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe Protection- Data theft for iframe</title>
+</head>
+
+<body>
+    <div>
+        Welcome, <span id="username"> </span>
+        <!--Vulnerable Code -->
+
+        <script>
+            function setCookie(name, value, days) {
+                const date = new Date()
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000))
+                const expires = "expires=" + date.toUTCString()
+                document.cookie = name + "=" + value + ";" + expires + ";path=/"
+            }
+            setCookie("exampleCookie", "Hello, Cookie!", 1)
+        </script>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get("name");
+            document.getElementById("username").innerHTML = `${name}`;
+        </script>
+            <h1>Iframe Protection- Data theft for iframe</h1>
+        <iframe src="http://localhost:5002/iframe-website2" sandbox="allow-same-origin allow-modals allow-scripts" ></iframe>
+   
+        <iframe src="https://google.co.in" ></iframe>
+    </div>
+</body>
+
+</html>
